@@ -1,6 +1,8 @@
+import { Pokedex } from './../../interfaces/pokedex';
 import { compileNgModule } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
+import { PokedexService } from '../../services/countries.service';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -12,10 +14,16 @@ import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 export class ByCapitalPageComponent {
 
 
+  public pokemons: any = [];
 
-  searchByCapital( term: string ):void {
-      console.log('Desde ByCapitalPage');
-      console.log({ term });
-  }
+  constructor ( private pokedexService: PokedexService) {};
 
+  searchByName(term: string): void {
+    this.pokedexService.searchPokemon(term)
+    .subscribe(pokemon => {
+        // this.pokemon = pokemon;
+         this.pokemons = Array.isArray(pokemon) ? pokemon : [pokemon];
+        console.log(this.pokemons);
+    });
+}
 }

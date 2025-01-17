@@ -7,17 +7,11 @@ import { Component,EventEmitter,Input, Output } from '@angular/core';
   styles: ``
 })
 export class SearchBoxComponent {
+  @Output() onValue = new EventEmitter<string>();
+  placeholder: string | undefined;
 
-
-  @Input()
-  public placeholder: string = '';
-
-
-
-  @Output()
-  public onValue =  new EventEmitter<string>();
-
-  emitValue( value : string ):void{
-    this.onValue.emit( value );
+  onInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.onValue.emit(input.value);
   }
 }
